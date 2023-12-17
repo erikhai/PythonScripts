@@ -22,6 +22,8 @@ def move_files_to_folder(source_folder, file_type):
                 shutil.move(source_file, destination_file)
                 print(f"Moved: {filename} to {destination_folder}")
             except FileNotFoundError:
+                print(" ")
+            except PermissionError as e:
                 print(f"Failed to move {filename} to {destination_folder}")
 
 def create_sorted_files_folder(sourcefile: str, filename: str):
@@ -37,7 +39,7 @@ def create_sorted_files_folder(sourcefile: str, filename: str):
         os.makedirs(new_folder_path)
         print(f"Folder '{new_folder_path}' created successfully!")
     except FileExistsError:
-        print(f"Folder '{new_folder_path}' already exists.")
+        print(f"Folder '{new_folder_path}' already exists!")  
     return new_folder_path
 
 
@@ -72,6 +74,7 @@ def getting_count_of_files(folder_path):
 
     # Display the unique file types and their counts
     print("Unique file types in the folder:")
+    print(folder_path)
     for file_type, count in file_types_count.items():
         print(f"{file_type}: {count} file(s)")
         unique_file_types.append(file_type)
