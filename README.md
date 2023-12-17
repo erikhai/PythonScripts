@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-# PythonScripts
-=======
 # PythonScripts
 ## What is this project?
 This project is consists of scripts that I have always needed to use for my daily life. These scripts can be used by anybody and is intended to be generally useful for everyone.
@@ -20,4 +17,3 @@ This project is consists of scripts that I have always needed to use for my dail
 5. I have gained better debugging experience and documentation experience.
 
 
->>>>>>> Stashed changes
