@@ -1,8 +1,19 @@
 import os
 from collections import Counter
-import shutil
+import rembg
+from PIL import Image
+import io
 
+def remove_background_with_rembg(input_image_path, output_image_path):
+    # Read the input image
+    with open(input_image_path, "rb") as input_file:
+        input_image = rembg.remove(input_file.read())
 
+    # Convert the byte data to a PIL Image
+    pil_image = Image.open(io.BytesIO(input_image))
+
+    # Save the result with a transparent background
+    pil_image.save(output_image_path, format='PNG')
 
 def move_files_to_folder(source_folder, file_type):
     
@@ -13,22 +24,12 @@ def move_files_to_folder(source_folder, file_type):
         # Check if the file is of file type
         if filename.lower().endswith(file_type) and os.path.isfile(source_file):
             destination_folder = create_sorted_files_folder(source_folder, file_type) #Create a folder
-            destination_file = os.path.join(destination_folder, filename)
-
+            remove_background_with_rembg(source_file, destination_folder) 
+            
             #os.path.join() This function is used to join one or more path components intelligently. 
             # It takes care of using the correct path separator
-
             
-            # Move the current file into the destination folder
-            try:
-                shutil.move(source_file, destination_file)
-                print(f"Moved: {filename} to {destination_folder}")
-            except FileNotFoundError:
-
-                print(" ")
-            except PermissionError as e:
-
-                print(f"Failed to move {filename} to {destination_folder}")
+            
 
 def create_sorted_files_folder(sourcefile: str, filename: str):
 
@@ -36,16 +37,14 @@ def create_sorted_files_folder(sourcefile: str, filename: str):
     downloads_path = sourcefile
 
     # Create a new folder 
-    new_folder_path = os.path.join(downloads_path, "File Type " + filename)
+    new_folder_path = os.path.join(downloads_path, "Transparent Images")
 
     try:
         # Create the folder if it doesn't exist
         os.makedirs(new_folder_path)
         print(f"Folder '{new_folder_path}' created successfully!")
     except FileExistsError:
-
-        print(f"Folder '{new_folder_path}' already exists!")  
-
+        print(f"Folder '{new_folder_path}' already exists.")
     return new_folder_path
 
 
@@ -57,9 +56,10 @@ def check_folder_existence(folder_path):
         return True
     return False
 
-def getting_count_of_files(folder_path):
+def getting_count_of_image_files(folder_path):
     file_types = []
     unique_file_types = []
+    image_file_types = [".jpg", ".png", ".jpeg", ".gif", ".bmp", ".tif", ".tiff", "webp", ".svg", ".ico", ".heif", ".heic", ".raw", ".nef", ".psd", ".ico"]
 
     # Iterate over all files in the folder
     for root, dirs, files in os.walk(folder_path): 
@@ -80,10 +80,10 @@ def getting_count_of_files(folder_path):
 
     # Display the unique file types and their counts
     print("Unique file types in the folder:")
-    print(folder_path)
     for file_type, count in file_types_count.items():
-        print(f"{file_type}: {count} file(s)")
-        unique_file_types.append(file_type)
+        if file_type in image_file_types:
+            print(f"{file_type}: {count} file(s)")
+            unique_file_types.append(file_type)
     return unique_file_types
 
 
@@ -100,7 +100,7 @@ def main():
         else:
             print("Please enter a valid folder path!!")
 
-    unique_file_types = getting_count_of_files(file_path)   #Get all the unique file types in that folder path  
+    unique_file_types = getting_count_of_image_files(file_path)   #Get all the unique file types in that folder path  
     print("Sorting files...\n")
 
     for file_type in unique_file_types:
