@@ -1,27 +1,43 @@
 import os
 from collections import Counter
+import shutil
 
 
 
+def move_files_to_folder(source_folder, file_type):
+    
+    # Iterate through files in the source folder
+    for filename in os.listdir(source_folder):
+        source_file = os.path.join(source_folder, filename)
 
+        # Check if the file is of file type
+        if filename.lower().endswith(file_type) and os.path.isfile(source_file):
+            destination_folder = create_sorted_files_folder(source_folder, file_type) #Create a folder
+            destination_file = os.path.join(destination_folder, filename)
+            #os.path.join() This function is used to join one or more path components. 
+           
+            
+            # Move the current file into the destination folder
+            try:
+                shutil.move(source_file, destination_file)
+                print(f"Moved: {filename} to {destination_folder}")
+            except FileNotFoundError:
+                print(f"Failed to move {filename} to {destination_folder}")
 
+def create_sorted_files_folder(sourcefile: str, filename: str):
 
-def create_sorted_files_folder(filename: str):
-     # Get the user's home directory
-    home_directory = os.path.expanduser("~")
+    
+    downloads_path = sourcefile
 
-    # Create a Downloads folder path
-    downloads_path = os.path.join(home_directory, "Downloads")
-
-    # Create a new folder named "MyDownloads" in the Downloads directory
-    new_folder_path = os.path.join(downloads_path, "Sorted Files")
+    # Create a new folder 
+    new_folder_path = os.path.join(downloads_path, "File Type " + filename)
 
     try:
         # Create the folder if it doesn't exist
         os.makedirs(new_folder_path)
         print(f"Folder '{new_folder_path}' created successfully!")
     except FileExistsError:
-        print(f"Folder '{new_folder_path}' already exists.")
+        print(" ")
     return new_folder_path
 
 
