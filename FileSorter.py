@@ -14,16 +14,20 @@ def move_files_to_folder(source_folder, file_type):
         if filename.lower().endswith(file_type) and os.path.isfile(source_file):
             destination_folder = create_sorted_files_folder(source_folder, file_type) #Create a folder
             destination_file = os.path.join(destination_folder, filename)
+
             #os.path.join() This function is used to join one or more path components intelligently. 
             # It takes care of using the correct path separator
+
             
             # Move the current file into the destination folder
             try:
                 shutil.move(source_file, destination_file)
                 print(f"Moved: {filename} to {destination_folder}")
             except FileNotFoundError:
+
                 print(" ")
             except PermissionError as e:
+
                 print(f"Failed to move {filename} to {destination_folder}")
 
 def create_sorted_files_folder(sourcefile: str, filename: str):
@@ -39,7 +43,9 @@ def create_sorted_files_folder(sourcefile: str, filename: str):
         os.makedirs(new_folder_path)
         print(f"Folder '{new_folder_path}' created successfully!")
     except FileExistsError:
+
         print(f"Folder '{new_folder_path}' already exists!")  
+
     return new_folder_path
 
 

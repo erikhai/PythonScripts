@@ -4,6 +4,18 @@ This project is consists of scripts that I have always needed to use for my dail
 
 ## What kind of scripts have I made?
 1. File Sorter: Provide a folder path into the application, and it will sort out all the files and place them into its respective folder (eg: all word documents is moved into a words folder). The new folders that are created are made in the path the user provided.
-2. Removing an images background: When making GUI's, many programmers will want to use images in their applications. If they find these images from online, they sometimes are not downloaded with a transparent background. This application will allow users to make their images background transparent.
-3. Sharpening an image: This is an useful script that allows us to quickly enhance a set of images automatically.
+
+
+## What are the plans for furture versions?
+1. Soon I wish to implement a script that converts all word files in a folder to pdfs and vice versa.
+2. Soon I wish to implement a script that allows you to make images transparent so they can be used in GUI's
+
+## What have I learnt while making this project?
+1. I have learnt how to open folders provided the correct folder path.
+2. I have learnt how to move files into different folders.
+3. I have learnt how to create new folders and ensure no duplicate folders are made.
+4. I have learnt how to use the os module such as how to use the os.path.join method and the os.makedirs method.
+5. I have gained better debugging experience and documentation experience.
+
+
 
